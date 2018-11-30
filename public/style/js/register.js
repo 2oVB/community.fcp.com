@@ -11,6 +11,6 @@ document.getElementById('register-btn').onclick = () => {
 
 
   socket.emit('register', name, password);
-  window.location = 'http://localhost:3000'
+  window.location = 'https://fcp-community.herokuapp.com/'
 }
 
