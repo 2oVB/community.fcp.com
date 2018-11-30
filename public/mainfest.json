@@ -1,0 +1,14 @@
+{
+  "short_name": "FCP",
+  "name": "community.fcp",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "scope": "/dashboard",
+  "start_url": "/",
+  "gcm_sender_id": "103953800507"
+}
