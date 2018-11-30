@@ -38,5 +38,5 @@ document.getElementById('login-btn').onclick = () => {
 
 socket.on('login_work', () => {
   localStorage.fcpauthname = name;
-  window.location = 'http://localhost:3000/dashboard'
+  window.location = 'https://fcp-community.herokuapp.com/dashboard';
 })

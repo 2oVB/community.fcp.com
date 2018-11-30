@@ -62,7 +62,7 @@ function run() {
 setInterval(run, 1);
 
 socket.on("send user", name => {
-  window.location = "http://localhost:3000/dashboard";
+  window.location = "https://fcp-community.herokuapp.com/dashboard";
   name = name;
   document.getElementById("name").textContent = name;
 });
