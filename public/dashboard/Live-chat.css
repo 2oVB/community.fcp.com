@@ -1,0 +1,19 @@
+#live_chat {
+  display: none;
+}
+
+#live-message {
+  bottom: 1;
+  height: 10%;
+  font-size: 150%;
+}
+
+#live-send {
+  width: 10%;
+}
+
+#live-msgs {
+  list-style-type: none;
+  font-family: "Anonymous Pro", monospace;
+  font-size: 200%;
+}
