@@ -12,9 +12,9 @@
 <body>
 <!-- Side navigation -->
 <div class="sidenav">
+    <a>Dashboard</a>
     <a id="a-frm" onclick="forum()">Forum</a>
     <a id="a-cht" onclick="live_chat()">Live chat</a>
-    <a >Dashboard</a>
     <a onclick="user_page()">User</a>
 </div>
 <div id="forum">
@@ -73,26 +73,31 @@
     <script src="../socket.io/socket.io.js"></script>
     <script src="index.js"></script>
     <script>
-    let state = 0; function forum() { if(state == 0) {
-document.getElementById('forum').style.display = 'grid';
-document.getElementById('live_chat').style.display = 'none';
-document.getElementById('user-page').style.display = 'none onkeyup=""'; state =
-1; } else { document.getElementById('forum').style.display = 'none';
-document.getElementById('forms').style.display = 'none';
-document.getElementById('live_chat').style.display = 'none';
-document.getElementById('user-page').style.display = 'none'; state = 0; } }
-function live_chat() { if(state == 0) {
-document.getElementById('forum').style.display = 'none';
-document.getElementById('forms').style.display = 'none';
-document.getElementById('live_chat').style.display = 'grid';
-document.getElementById('user-page').style.display = 'none'; state = 1; } else {
-document.getElementById('forum').style.display = 'none';
-document.getElementById('forms').style.display = 'none';
-document.getElementById('live_chat').style.display = 'none'; state = 0; } }
-function user_page() { document.getElementById('live_chat').style.display =
-'none'; document.getElementById('forum').style.display = 'none';
-document.getElementById('forms').style.display = 'none';
-document.getElementById('user-page').style.display = 'grid'; }
+    let state = 0; function forum() { 
+        if(state == 0) {
+    document.getElementById('forum').style.display = 'grid';
+    document.getElementById('live_chat').style.display = 'none';
+    document.getElementById('user-page').style.display = 'none onkeyup=""'; state =1; } else {
+     document.getElementById('forum').style.display = 'none';
+    document.getElementById('forms').style.display = 'none';
+    document.getElementById('live_chat').style.display = 'none';
+    document.getElementById('user-page').style.display = 'none'; state = 0; } }
+
+function live_chat() { 
+    if(state == 0) {
+        document.getElementById('forum').style.display = 'none';
+        document.getElementById('forms').style.display = 'none';
+        document.getElementById('live_chat').style.display = 'grid';
+        document.getElementById('user-page').style.display = 'none'; state = 1; } else {
+        document.getElementById('forum').style.display = 'none';
+        document.getElementById('forms').style.display = 'none';
+        document.getElementById('live_chat').style.display = 'none'; state = 0; } }
+function user_page() {
+     document.getElementById('live_chat').style.display ='none'; 
+     document.getElementById('forum').style.display = 'none';
+     document.getElementById('forms').style.display = 'none';
+     document.getElementById('user-page').style.display = 'grid'; 
+    }
 </script>
 </body>
 </html>

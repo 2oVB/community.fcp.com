@@ -3,15 +3,11 @@ const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
-
-
 const firebase = require("firebase");
 require("firebase/firestore");
 
-
-
+let passwordVar;
 let nameVar;
-
 
 firebase.initializeApp({
   apiKey: "AIzaSyBySbUPwRebY4sA8qChW4QRMhwQYoCiuRU",
@@ -42,16 +38,16 @@ io.on("connection", socket => {
     socket.emit('add message', nameVar, message)
   });
 
-  socket.on("new form", (title, question) => {
+  socket.on("new form", (title, question, name) => {
     db.collection("forms")
       .doc()
       .set({
         title: title,
-        question: question
+        question: question,
+        name:name
       })
       .then(function() {
         console.log("Document successfully written!");
-        document.getElementById('forms').innerHTML = '';
         socket.emit('load forms')
       })
       .catch(function(error) {
@@ -72,7 +68,7 @@ io.on("connection", socket => {
           let getDoc = ref
             .get()
             .then(doc => {
-              socket.emit("add form", doc.data().title, doc.data().question);
+              socket.emit("add form", doc.data().title, doc.data().question, doc.data().name);
             })
             .catch(err => {
               console.log("Error getting document", err);
@@ -81,10 +77,7 @@ io.on("connection", socket => {
       });
   });
 
-  socket.on("register", (name, password) => {
-    socket.broadcast.emit("add message", nameVar, message);
-    socket.emit("add message", nameVar, message);
-  });
+
 
   socket.on("register", (name, password) => {
     db.collection("users")
@@ -103,8 +96,10 @@ io.on("connection", socket => {
     console.log("a user registered");
   });
 
+
   socket.on("login", (name, password) => {
     let id;
+
 
     db.collection("users")
       .get()
@@ -124,6 +119,8 @@ io.on("connection", socket => {
                   password == doc.data().password
                 ) {
                   dir = false;
+                  socket.emit('send data', doc.data().username, doc.data().password)
+
                   nameVar = doc.data().username;
 
                   socket.emit("login_work");
