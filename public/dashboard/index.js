@@ -86,6 +86,7 @@ document.getElementById("add-form").onclick = () => {
     document.getElementById("question").value
   ) {
     event.preventDefault();
+    document.get
     socket.emit("load forms", 5);
 
     document.getElementById("forms-input").style.display = "grid";
@@ -107,6 +108,7 @@ document.getElementById("add-form2").onclick = () => {
     document.getElementById("question2").value
   ) {
     event.preventDefault();
+    document.getElementById("forms").innerHTML = "";
     socket.emit("load forms", 5);
 
     document.getElementById("forms-input").style.display = "grid";
@@ -114,7 +116,6 @@ document.getElementById("add-form2").onclick = () => {
     title = document.getElementById("title2").value;
     question = document.getElementById("question2").value;
 
-    document.getElementById("forms").innerHTML = "";
 
     socket.emit("new form", today + ": " + title, question);
   }
