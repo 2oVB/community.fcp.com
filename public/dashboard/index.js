@@ -98,7 +98,7 @@ document.getElementById("add-form").onclick = () => {
     document.getElementById("go").style.display = "none";
     document.getElementById("add-form").style.display = "none";
 
-    socket.emit("new form", today + ": " + title, question);
+    socket.emit("new form", today + ": " + title, question, localStorage.fcpauthname);
   }
 };
 
@@ -117,7 +117,7 @@ document.getElementById("add-form2").onclick = () => {
     question = document.getElementById("question2").value;
 
 
-    socket.emit("new form", today + ": " + title, question);
+    socket.emit("new form", today + ": " + title, question, localStorage.fcpauthname);
   }
 };
 
@@ -127,7 +127,7 @@ document.getElementById("live-send").onclick = () => {
 
     live_message = document.getElementById("live-message").value;
 
-    socket.emit("new message", document.getElementById("live-message").value);
+    socket.emit("new message", document.getElementById("live-message").value, );
   }
 };
 
@@ -138,55 +138,27 @@ socket.on("add message", (name, message) => {
 
   document.getElementById("live-msgs").appendChild(li);
 });
-socket.on("add form", (title, question) => {
+socket.on("add form", (title, question, name) => {
+  let spacer = document.createElement('div')
+  spacer.id = 'spacer'
+
   let div = document.createElement("div");
   div.id = "form";
   div.className = "form";
 
+  let nameElmnt = document.createElement('h2');
+  nameElmnt.textContent = "By: " + name;
+
   let titleElmnt = document.createElement("h3");
   titleElmnt.textContent = title;
 
-  let questionElmnt = document.createElement("p");
+  let questionElmnt = document.createElement("h4");
   questionElmnt.textContent = question;
 
-  // let commentElmnt = document.createElement('img');
-  // commentElmnt.src = '/style/images/comment.png'
-  // commentElmnt.id = "comment";
-  // commentElmnt.style.width = '30px';
-  // commentElmnt.style.height = '30px';
-  // commentElmnt.onclick = () => {
-  //   if (state == 0) {
-  //     document.getElementById('commentSend').style.display = 'inline';
-  //     document.getElementById('commentInput').style.display = 'inline';
-      
-  //     state = 1;
-  //   } else if (state == 1) {
-  //     document.getElementById('commentSend').style.display = 'none';
-  //     document.getElementById('commentInput').style.display = 'none';
-  //     state = 0;
-  //   }
-  // }
 
-  // let commentInput = document.createElement('input');
-  // commentInput.id = 'commentInput';
-  // commentInput.type = 'text';
-  // commentInput.style.display = 'none';
-
-  // let commentSend = document.createElement('button');
-  // commentSend.id = 'commentSend';
-  // commentSend.textContent = 'Send comment'
-  // commentSend.style.display = 'none'
-  // commentSend.className = 'button-primary';
-
-  let spacer = document.createElement("div");
-  spacer.id = "spacer";
-
-  
+  div.appendChild(nameElmnt)
   div.appendChild(titleElmnt);
   div.appendChild(questionElmnt);
-  // div.appendChild(commentElmnt)
-  // div.appendChild(commentInput) 
-  // div.appendChild(commentSend) 
   div.appendChild(spacer);
   document.getElementById("forms").appendChild(div);
 });

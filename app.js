@@ -26,6 +26,7 @@ server.listen(process.env.PORT || 3000, () => {
   console.log("fcp listening on port", 3000);
 });
 
+
 app.get("/dashboard", (req, res) => {
   res.use(express.static("public"));
 });
@@ -39,12 +40,12 @@ io.on("connection", socket => {
   });
 
   socket.on("new form", (title, question, name) => {
-    db.collection("forms")
+    db.collection("community-forms")
       .doc()
       .set({
+        name: name,
         title: title,
         question: question,
-        name:name
       })
       .then(function() {
         console.log("Document successfully written!");
@@ -58,13 +59,13 @@ io.on("connection", socket => {
   socket.on("load forms", (max, min) => {
     let id;
 
-    db.collection("forms")
+    db.collection("community-forms")
       .get()
       .then((querySnapshot, req, res) => {
         querySnapshot.forEach(doc => {
           id = doc.id;
 
-          let ref = db.collection("forms").doc(id);
+          let ref = db.collection("community-forms").doc(id);
           let getDoc = ref
             .get()
             .then(doc => {

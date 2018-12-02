@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "nodemon app.js",
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "keywords": [
     "node",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@google-cloud/firestore": "^0.19.0",
     "express": "^4.16.4",
-    "firebase": "^5.5.9",
+    "firebase": "^5.6.0-1",
     "jquery": "^3.3.1",
     "jsdom": "^13.0.0",
     "mongodb": "^3.1.10",
