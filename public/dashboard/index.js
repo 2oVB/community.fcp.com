@@ -1,6 +1,6 @@
 window.onload = () => {
   if (!sessionStorage.getItem('fcpauthname')) {
-    window.location = 'http://localhost:3000';
+    window.location = 'https://fcp-community.herokuapp.com';
   }
 }
 
