@@ -1,3 +1,14 @@
+window.onload = () => {
+  if (!sessionStorage.getItem('fcpauthname')) {
+    window.location = 'http://localhost:3000';
+  }
+}
+
+window.onbeforeunload = () => {
+  window.sessionStorage.clear();
+}
+
+
 let socket = io();
 
 let title;
@@ -6,27 +17,6 @@ let question;
 let live_message;
 
 let name;
-
-function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(";");
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == " ") {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-
-// if (getCookie("logged_in") == true) {
-//   document.location = "http://localhost:3000";
-//   document.cookie = "logged_in=false";
-// }
 
 var today = new Date();
 var dd = today.getDate();
@@ -98,7 +88,7 @@ document.getElementById("add-form").onclick = () => {
     document.getElementById("go").style.display = "none";
     document.getElementById("add-form").style.display = "none";
 
-    socket.emit("new form", today + ": " + title, question, localStorage.fcpauthname);
+    socket.emit("new form", today + ": " + title, question, sessionStorage.getItem('fcpauthname'));
   }
 };
 

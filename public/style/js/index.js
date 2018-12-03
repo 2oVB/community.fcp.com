@@ -11,21 +11,6 @@ window.onload = () => {
   }, 1500)
 };
 
-
-Notification.requestPermission(function () {
-  console.log("New notification")
-});
-
-let title = 'Comment recived';
-let options = {
-  body: 'Comment',
-};
-
-let noti = new Notification(title, options)
-
-
-
-
 document.getElementById('login-btn').onclick = () => {
   event.preventDefault();
   name = document.getElementById('nameInput').value;
@@ -37,6 +22,6 @@ document.getElementById('login-btn').onclick = () => {
 
 
 socket.on('login_work', () => {
-  localStorage.fcpauthname = name;
+  sessionStorage.setItem('fcpauthname', name);
   window.location = 'https://fcp-community.herokuapp.com/dashboard';
 })
