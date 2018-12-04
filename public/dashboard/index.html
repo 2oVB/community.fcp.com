@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
 </head>
-<body>
+<body id="body">
 <!-- Side navigation -->
 <div class="sidenav">
     <a id="a-frm" onclick="forum()">Forum</a>
@@ -24,11 +24,11 @@
             <input required="required" type="text" id="title" placeholder="is fish instinct?">
             <h3 type="text">Question</h3>
             <textarea  textContent="" required="required" id="question" type="text">
-
             </textarea>
         </form>
         </div>
         <div id="extrnl-buttons" align="center">
+                <input type="file" id="form-image">
          <button id="add-form" class="button-primary">Send</button>
          <button id="go" class="button-primary">Go to questions</button>
         </div>
@@ -40,6 +40,7 @@
             <h3 type="text">Question</h3>
             <textarea textContent="" required="required" id="question2" type="text"></textarea>
             <div id="forms-input-extrnl">
+             <input type="file" id="form-image">
              <button id="add-form2" class="button-primary">Send</button>
              <div id="spacer">
            </div>

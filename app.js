@@ -3,8 +3,10 @@ const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
-const firebase = require("firebase");
 require("firebase/firestore");
+require("firebase/storage");
+const firebase = require('firebase');
+
 
 let passwordVar;
 let nameVar;
@@ -12,12 +14,20 @@ let nameVar;
 firebase.initializeApp({
   apiKey: "AIzaSyBySbUPwRebY4sA8qChW4QRMhwQYoCiuRU",
   authDomain: "fcp-firebase.firebaseapp.com",
-  projectId: "fcp-firebase"
+  projectId: "fcp-firebase",
+  storageBucket: "gs://fcp-firebase.appspot.com",
 });
+
+const storage = firebase.storage();
+const app_storage = firebase.app().storage("gs://fcp-firebase.appspot.com");
+const storageRef = firebase.storage().ref();
+
+
+
 
 const db = firebase.firestore();
 db.settings({
-  timestampsInSnapshots: true
+  timestampsInSnapshots: true,
 });
 
 app.use(express.static("public"));
@@ -39,7 +49,12 @@ io.on("connection", socket => {
     socket.emit('add message', nameVar, message)
   });
 
-  socket.on("new form", (title, question, name) => {
+  socket.on("new form", (title, question, name, image) => {
+    // storageRef.put(image.files).then(function(snapshot) {
+    //   console.log('Uploaded a blob or file!');
+    // });
+    console.log(image)
+    
     db.collection("community-forms")
       .doc()
       .set({

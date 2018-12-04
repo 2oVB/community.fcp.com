@@ -8,6 +8,47 @@ window.onbeforeunload = () => {
   window.sessionStorage.clear();
 }
 
+function startRead(evt) {
+  var file = document.getElementById('form-image').value;
+  if (file) {
+      if (file.type.match("image.*")) {
+          getAsImage(file);
+          alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
+      }
+      else {
+          getAsText(file);
+          alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
+      }
+  }
+  evt.stopPropagation();
+  evt.preventDefault();
+}
+function startReadFromDrag(evt) {
+  var file = evt.dataTransfer.value;
+  if (file) {
+      if (file.type.match("image.*")) {
+          getAsImage(file);
+          alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
+      }
+      else {
+          getAsText(file);
+          alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
+      }
+  }
+  evt.stopPropagation();
+  evt.preventDefault();
+}
+function getAsImage(readFile) {
+  var reader = new FileReader();
+  reader.readAsDataURL(readFile);
+  reader.onload = addImg;
+}
+function addImg(imgsrc) {
+  var img = document.createElement('img');
+  img.setAttribute("src", imgsrc.target.result);
+  document.getElementById("body").insertBefore(img);
+}
+
 
 let socket = io();
 
@@ -88,7 +129,9 @@ document.getElementById("add-form").onclick = () => {
     document.getElementById("go").style.display = "none";
     document.getElementById("add-form").style.display = "none";
 
-    socket.emit("new form", today + ": " + title, question, sessionStorage.getItem('fcpauthname'));
+    socket.emit("new form", today + ": " + title, question, sessionStorage.getItem('fcpauthname'), document.getElementById('form-image').value);
+
+    
   }
 };
 
@@ -98,8 +141,7 @@ document.getElementById("add-form2").onclick = () => {
     document.getElementById("question2").value
   ) {
     event.preventDefault();
-    document.getElementById("forms").innerHTML = "";
-    socket.emit("load forms", 5);
+
 
     document.getElementById("forms-input").style.display = "grid";
 
@@ -107,6 +149,8 @@ document.getElementById("add-form2").onclick = () => {
     question = document.getElementById("question2").value;
 
 
+    document.getElementById("forms").innerHTML = "";
+    socket.emit("load forms");
     socket.emit("new form", today + ": " + title, question, localStorage.fcpauthname);
   }
 };
@@ -120,6 +164,12 @@ document.getElementById("live-send").onclick = () => {
     socket.emit("new message", document.getElementById("live-message").value, );
   }
 };
+
+let array = [100]
+
+array.slice(10, 20).forEach(() => {
+  console.log("eh")
+});
 
 socket.on("add message", (name, message) => {
   let li = document.createElement("li");
