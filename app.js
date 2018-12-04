@@ -57,7 +57,7 @@ io.on("connection", socket => {
   });
 
   socket.on("new form", (title, question, name, image) => {
-    uploadImage(image )
+    // uploadImage(image )
     // console.log(image)
     
     db.collection("community-forms")
