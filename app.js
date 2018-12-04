@@ -21,6 +21,7 @@ firebase.initializeApp({
 const storage = firebase.storage();
 const app_storage = firebase.app().storage("gs://fcp-firebase.appspot.com");
 const storageRef = firebase.storage().ref();
+const ref = storageRef.child('images');
 
 
 
@@ -36,6 +37,12 @@ server.listen(process.env.PORT || 3000, () => {
   console.log("fcp listening on port", 3000);
 });
 
+function uploadImage(image){
+  ref.putString(image, 'base64').then(() => {
+    console.log('Image uploaded');
+  });
+}
+
 
 app.get("/dashboard", (req, res) => {
   res.use(express.static("public"));
@@ -44,16 +51,14 @@ app.get("/dashboard", (req, res) => {
 io.on("connection", socket => {
   console.log("a user connected");
 
-  socket.on('new message', (message) => {
+  socket.on('new message', (name, message) => {
     socket.broadcast.emit('add message', nameVar, message);
     socket.emit('add message', nameVar, message)
   });
 
   socket.on("new form", (title, question, name, image) => {
-    // storageRef.put(image.files).then(function(snapshot) {
-    //   console.log('Uploaded a blob or file!');
-    // });
-    console.log(image)
+    uploadImage(image )
+    // console.log(image)
     
     db.collection("community-forms")
       .doc()

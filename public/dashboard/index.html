@@ -28,7 +28,8 @@
         </form>
         </div>
         <div id="extrnl-buttons" align="center">
-                <input type="file" id="form-image">
+                <input type="file" onchange="startRead()" id="form-image" class="form-image" name="form-image" accept=".jpg, .jpeg, .png">
+
          <button id="add-form" class="button-primary">Send</button>
          <button id="go" class="button-primary">Go to questions</button>
         </div>
@@ -40,7 +41,7 @@
             <h3 type="text">Question</h3>
             <textarea textContent="" required="required" id="question2" type="text"></textarea>
             <div id="forms-input-extrnl">
-             <input type="file" id="form-image">
+                <input type="file" onchange="startRead()" id="form-image" class="form-image" name="form-image" accept=".jpg, .jpeg, .png">
              <button id="add-form2" class="button-primary">Send</button>
              <div id="spacer">
            </div>
@@ -94,6 +95,15 @@ function user_page() { document.getElementById('live_chat').style.display =
 'none'; document.getElementById('forum').style.display = 'none';
 document.getElementById('forms').style.display = 'none';
 document.getElementById('user-page').style.display = 'grid'; }
+</script>
+<script>
+    function startRead(evt) {
+    var file = document.getElementById(‘file‘).files[0];
+    if (file) {
+        //  getAsText(file);
+        alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
+    }
+}
 </script>
 </body>
 </html>

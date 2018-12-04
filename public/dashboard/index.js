@@ -8,21 +8,7 @@ window.onbeforeunload = () => {
   window.sessionStorage.clear();
 }
 
-function startRead(evt) {
-  var file = document.getElementById('form-image').value;
-  if (file) {
-      if (file.type.match("image.*")) {
-          getAsImage(file);
-          alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
-      }
-      else {
-          getAsText(file);
-          alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
-      }
-  }
-  evt.stopPropagation();
-  evt.preventDefault();
-}
+let image;
 function startReadFromDrag(evt) {
   var file = evt.dataTransfer.value;
   if (file) {
@@ -77,6 +63,39 @@ today = mm + "/" + dd + "/" + yyyy;
 let bool = true;
 const parent = document.getElementById("forms");
 let length = parent.getElementsByClassName("form");
+
+function handleFileSelect(event) {
+  //Check File API support
+  if (window.File && window.FileList && window.FileReader) {
+
+      var files = event.target.files; //FileList object
+      var output = document.getElementById("result");
+
+      for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          //Only pics
+          if (!file.type.match('image')) continue;
+
+          var picReader = new FileReader();
+          picReader.addEventListener("load", function (event) {
+              var picFile = event.target;
+              var div = document.createElement("div");
+              div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" + "title='" + file.name + "'/>";
+              // output.insertBefore(div, null);
+             image = picFile.result;
+          });
+          //Read the image
+          picReader.readAsDataURL(file);
+      }
+  } else {
+      alert("Your browser does not support File API");
+  }
+}
+
+document.getElementById('form-image').addEventListener('change', handleFileSelect, false);
+
+
+
 //runs every second
 function run() {
   length = parent.getElementsByClassName("form").length;
@@ -129,11 +148,13 @@ document.getElementById("add-form").onclick = () => {
     document.getElementById("go").style.display = "none";
     document.getElementById("add-form").style.display = "none";
 
-    socket.emit("new form", today + ": " + title, question, sessionStorage.getItem('fcpauthname'), document.getElementById('form-image').value);
-
+    socket.emit("new form", today + ": " + title, question, sessionStorage.getItem('fcpauthname'));
+    console.log(document.getElementById('form-image').src)
     
   }
 };
+
+
 
 document.getElementById("add-form2").onclick = () => {
   if (
@@ -151,7 +172,9 @@ document.getElementById("add-form2").onclick = () => {
 
     document.getElementById("forms").innerHTML = "";
     socket.emit("load forms");
-    socket.emit("new form", today + ": " + title, question, localStorage.fcpauthname);
+    // image .replace("data:image/jpeg;base64,", "", image);
+    console.log(image)
+    // socket.emit("new form", tod ay + ": " + title, question, localStorage.fcpauthname, image);
   }
 };
 
